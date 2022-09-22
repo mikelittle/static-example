@@ -2,7 +2,7 @@ name: Deploy to Bunny CDN
 on: [push]
 jobs:
   Explore-GitHub-Actions:
-    runs-on: php:8.0
+    runs-on: ubuntu-20.04
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
