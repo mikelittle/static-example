@@ -1,8 +1,10 @@
 name: Deploy to Bunny CDN
 on: [push]
 jobs:
-  Explore-GitHub-Actions:
+  deploy_prod:
     runs-on: ubuntu-20.04
+    container: php:8.0
+    if: contains( github.ref, 'master')
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
@@ -22,10 +24,10 @@ jobs:
           composer require own3d/bunny-cli
       - name: Deploy
         run: |
-          echo "BUNNY_STORAGE_HOSTNAME=$BUNNY_STORAGE_HOSTNAME" > .env
-          echo "BUNNY_STORAGE_USERNAME=$BUNNY_STORAGE_USERNAME" >> .env
-          echo "BUNNY_STORAGE_PASSWORD=$BUNNY_STORAGE_PASSWORD" >> .env
-          echo "BUNNY_PULL_ZONE_ID=$BUNNY_PULL_ZONE_ID" >> .env
-          echo "BUNNY_API_ACCESS_KEY=$BUNNY_API_ACCESS_KEY" >> .env
+          echo "BUNNY_STORAGE_HOSTNAME={{ secret.BUNNY_STORAGE_HOSTNAME }}" > .env
+          echo "BUNNY_STORAGE_USERNAME={{ secret.BUNNY_STORAGE_USERNAME }}" >> .env
+          echo "BUNNY_STORAGE_PASSWORD={{ secret.BUNNY_STORAGE_PASSWORD }}" >> .env
+          echo "BUNNY_PULL_ZONE_ID={{ secret.BUNNY_PULL_ZONE_ID }}" >> .env
+          echo "BUNNY_API_ACCESS_KEY={{ secret.BUNNY_API_ACCESS_KEY }}" >> .env
           ./vendor/bin/bunny deploy --dir=public/
       - run: echo "🍏 This job's status is ${{ job.status }}."
