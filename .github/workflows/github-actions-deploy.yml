@@ -4,7 +4,7 @@ jobs:
   deploy_prod:
     runs-on: ubuntu-20.04
     container: php:8.0
-    if: contains( github.ref, 'master')
+    #if: contains( github.ref, 'master')
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
