@@ -1,0 +1,31 @@
+name: Deploy to Bunny CDN
+on: [push]
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: php:8.0
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
+        run: |
+          ls -r ${{ github.workspace }}
+      - name: Install packages
+        run: |
+          sudo apt-get update -y && sudo apt-get upgrade -y
+          sudo apt-get install -y git zip
+          sudo curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/bin --filename=composer
+          composer require own3d/bunny-cli
+      - name: Deploy
+        run: |
+          echo "BUNNY_STORAGE_HOSTNAME=$BUNNY_STORAGE_HOSTNAME" > .env
+          echo "BUNNY_STORAGE_USERNAME=$BUNNY_STORAGE_USERNAME" >> .env
+          echo "BUNNY_STORAGE_PASSWORD=$BUNNY_STORAGE_PASSWORD" >> .env
+          echo "BUNNY_PULL_ZONE_ID=$BUNNY_PULL_ZONE_ID" >> .env
+          echo "BUNNY_API_ACCESS_KEY=$BUNNY_API_ACCESS_KEY" >> .env
+          ./vendor/bin/bunny deploy --dir=public/
+      - run: echo "🍏 This job's status is ${{ job.status }}."
