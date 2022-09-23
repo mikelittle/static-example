@@ -15,19 +15,11 @@ jobs:
           apt-get -q install -y git zip > /dev/null
           curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
           composer require own3d/bunny-cli
-      - name: Create .env file and deploy
-        run: |
-          # echo "BUNNY_STORAGE_HOSTNAME=${{ secrets.BUNNY_STORAGE_HOSTNAME }}" > .env
-          # echo "BUNNY_STORAGE_USERNAME=${{ secrets.BUNNY_STORAGE_USERNAME }}" >> .env
-          # echo "BUNNY_STORAGE_PASSWORD=${{ secrets.BUNNY_STORAGE_PASSWORD }}" >> .env
-          # echo "BUNNY_PULL_ZONE_ID=${{ secrets.BUNNY_PULL_ZONE_ID }}" >> .env
-          # echo "BUNNY_API_ACCESS_KEY=${{ secrets.BUNNY_API_ACCESS_KEY }}" >> .env
-          ./vendor/bin/bunny deploy --dir=public/
+      - name: Populate env and deploy
+        run: ./vendor/bin/bunny deploy --dir=public/
         env:
             BUNNY_STORAGE_HOSTNAME: ${{ secrets.BUNNY_STORAGE_HOSTNAME }}
             BUNNY_STORAGE_USERNAME: ${{ secrets.BUNNY_STORAGE_USERNAME }}
             BUNNY_STORAGE_PASSWORD: ${{ secrets.BUNNY_STORAGE_PASSWORD }}
             BUNNY_PULL_ZONE_ID: ${{ secrets.BUNNY_PULL_ZONE_ID }}
             BUNNY_API_ACCESS_KEY: ${{ secrets.BUNNY_API_ACCESS_KEY }}
-      - name: Complete
-        run: echo "🍏 This job's status is ${{ job.status }}."
