@@ -1,35 +1,44 @@
 /* Static Site stylesheet */
 
 html {
-    font-weight: normal;
-    font-family: sans-serif;
-    font-size: 16px;
-  }
+<	font-weight: normal;
+	font-family: sans-serif;
+	font-size: 16px;
+}
 
-  section {
-    width: 30em;
-  }
+h1 {
+	margin: 1em auto;
+	text-align: center;
+}
+section {
+	width: 30em;
+	margin: auto;
+}
 
-  .form-row {
-    padding: 8px;
-  }
+section {
+	width: 30em;
+}
 
-  .form-row label {
-    width: 6em;
-    display: inline-block;
-    text-align: right;
-    vertical-align: top;
-  }
+.form-row {
+	padding: 8px;
+}
 
-  .form-row input,
-  .form-row textarea {
-    width: 14em;
-  }
+.form-row label {
+	width: 6em;
+	display: inline-block;
+	text-align: right;
+	vertical-align: top;
+}
 
-  .form-row textarea {
-    height: 6em;
-  }
+.form-row input,
+.form-row textarea {
+	width: 14em;
+}
 
-  .form-row.submit {
-    margin-left: 6em;
-  }
+.form-row textarea {
+	height: 6em;
+}
+
+.form-row.submit {
+	margin-left: 6em;
+}
