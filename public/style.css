@@ -1,0 +1,35 @@
+/* Static Site stylesheet */
+
+html {
+    font-weight: normal;
+    font-family: sans-serif;
+    font-size: 16px;
+  }
+
+  section {
+    width: 30em;
+  }
+
+  .form-row {
+    padding: 8px;
+  }
+
+  .form-row label {
+    width: 6em;
+    display: inline-block;
+    text-align: right;
+    vertical-align: top;
+  }
+
+  .form-row input,
+  .form-row textarea {
+    width: 14em;
+  }
+
+  .form-row textarea {
+    height: 6em;
+  }
+
+  .form-row.submit {
+    margin-left: 6em;
+  }

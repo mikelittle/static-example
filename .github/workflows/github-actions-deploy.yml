@@ -1,0 +1,24 @@
+name: Deploy to Bunny CDN
+on: [push]
+jobs:
+  deploy_prod:
+    runs-on: ubuntu-20.04
+    container: php:8.0
+    if: contains( github.ref, 'main')
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Install packages
+        run: |
+          apt-get -qq update -y > /dev/null && apt-get -qq upgrade -y > /dev/null
+          apt-get -q install -y git zip > /dev/null
+          curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
+          composer require own3d/bunny-cli
+      - name: Populate env and deploy
+        run: ./vendor/bin/bunny deploy --dir=public/
+        env:
+            BUNNY_STORAGE_HOSTNAME: ${{ secrets.BUNNY_STORAGE_HOSTNAME }}
+            BUNNY_STORAGE_USERNAME: ${{ secrets.BUNNY_STORAGE_USERNAME }}
+            BUNNY_STORAGE_PASSWORD: ${{ secrets.BUNNY_STORAGE_PASSWORD }}
+            BUNNY_PULL_ZONE_ID: ${{ secrets.BUNNY_PULL_ZONE_ID }}
+            BUNNY_API_ACCESS_KEY: ${{ secrets.BUNNY_API_ACCESS_KEY }}
