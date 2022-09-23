@@ -29,5 +29,7 @@ jobs:
           echo "BUNNY_STORAGE_PASSWORD=${{ secrets.BUNNY_STORAGE_PASSWORD }}" >> .env
           echo "BUNNY_PULL_ZONE_ID=${{ secrets.BUNNY_PULL_ZONE_ID }}" >> .env
           echo "BUNNY_API_ACCESS_KEY=${{ secrets.BUNNY_API_ACCESS_KEY }}" >> .env
+          echo "dot env file now contains"
+          cat .env
           ./vendor/bin/bunny deploy --dir=public/
       - run: echo "🍏 This job's status is ${{ job.status }}."
