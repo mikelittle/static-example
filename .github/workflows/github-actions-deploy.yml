@@ -6,16 +6,9 @@ jobs:
     container: php:8.0
     #if: contains( github.ref, 'master')
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       - name: Check out repository code
         uses: actions/checkout@v3
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
-        run: |
-          ls -r
       - name: Install packages
         run: |
           apt-get -qq update -y > /dev/null && apt-get -qq upgrade -y > /dev/null
@@ -33,7 +26,6 @@ jobs:
           cat .env
           echo ${{ env.BUNNY_STORAGE_HOSTNAME }} | sed 's/./_/g'
           ls -la
-          ./vendor/bin/bunny deploy --dir=public/
         env:
             BUNNY_STORAGE_HOSTNAME: ${{ secrets.BUNNY_STORAGE_HOSTNAME }}
             BUNNY_STORAGE_USERNAME: ${{ secrets.BUNNY_STORAGE_USERNAME }}
@@ -41,4 +33,5 @@ jobs:
             BUNNY_PULL_ZONE_ID: ${{ secrets.BUNNY_PULL_ZONE_ID }}
             BUNNY_API_ACCESS_KEY: ${{ secrets.BUNNY_API_ACCESS_KEY }}
       - name: Deploy
-        run: echo "🍏 This job's status is ${{ job.status }}."
+        run: ./vendor/bin/bunny deploy --dir=public/
+
