@@ -18,16 +18,16 @@ jobs:
           ls -r ${{ github.workspace }}
       - name: Install packages
         run: |
-          sudo apt-get update -y && sudo apt-get upgrade -y
-          sudo apt-get install -y git zip
-          sudo curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/bin --filename=composer
+          apt-get -qq update -y > /dev/null && apt-get -qq upgrade -y > /dev/null
+          apt-get -q install -y git zip > /dev/null
+          curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
           composer require own3d/bunny-cli
       - name: Deploy
         run: |
-          echo "BUNNY_STORAGE_HOSTNAME={{ secret.BUNNY_STORAGE_HOSTNAME }}" > .env
-          echo "BUNNY_STORAGE_USERNAME={{ secret.BUNNY_STORAGE_USERNAME }}" >> .env
-          echo "BUNNY_STORAGE_PASSWORD={{ secret.BUNNY_STORAGE_PASSWORD }}" >> .env
-          echo "BUNNY_PULL_ZONE_ID={{ secret.BUNNY_PULL_ZONE_ID }}" >> .env
-          echo "BUNNY_API_ACCESS_KEY={{ secret.BUNNY_API_ACCESS_KEY }}" >> .env
+          echo "BUNNY_STORAGE_HOSTNAME=${{ secrets.BUNNY_STORAGE_HOSTNAME }}" > .env
+          echo "BUNNY_STORAGE_USERNAME=${{ secrets.BUNNY_STORAGE_USERNAME }}" >> .env
+          echo "BUNNY_STORAGE_PASSWORD=${{ secrets.BUNNY_STORAGE_PASSWORD }}" >> .env
+          echo "BUNNY_PULL_ZONE_ID=${{ secrets.BUNNY_PULL_ZONE_ID }}" >> .env
+          echo "BUNNY_API_ACCESS_KEY=${{ secrets.BUNNY_API_ACCESS_KEY }}" >> .env
           ./vendor/bin/bunny deploy --dir=public/
       - run: echo "🍏 This job's status is ${{ job.status }}."
