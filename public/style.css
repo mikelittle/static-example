@@ -1,7 +1,7 @@
 /* Static Site stylesheet */
 
 html {
-<	font-weight: normal;
+	font-weight: normal;
 	font-family: sans-serif;
 	font-size: 16px;
 }
@@ -10,6 +10,7 @@ h1 {
 	margin: 1em auto;
 	text-align: center;
 }
+
 section {
 	width: 30em;
 	margin: auto;
